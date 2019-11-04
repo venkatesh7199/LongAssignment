@@ -190,6 +190,8 @@ struct Node* DeleteNode (struct Node* root ){
 
 void InorderTraversal (struct Node* root){
 
+    if(root == NULL)return;
+	
     if( root->leftChild != NULL ) InorderTraversal (root->leftChild);
 
     cout<< (root->keys) <<" "<<root->height;
