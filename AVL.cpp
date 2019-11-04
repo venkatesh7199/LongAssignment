@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+ #include<bits/stdc++.h>
 using namespace std;
 
 #define ll long long
@@ -132,9 +132,6 @@ struct Node* InsertNode (struct Node* root, ll x, bool LRFlag){
 
 struct Node* DeleteNode (struct Node* root ){
 
-
-
-
     if (root->rightChild == NULL){
 
         if(root->leftChild != NULL )root->leftChild->Parent = root->Parent;
@@ -188,7 +185,6 @@ struct Node* DeleteNode (struct Node* root ){
         return temp;
 
     }
-
 
 }
 
@@ -358,7 +354,7 @@ struct Node* Insert(struct Node* root, ll x){
     return root;
 }
 
-
+/*
 struct Node* Delete(struct Node* root, ll x){
 
     struct Node* temp = Search(root, x);
@@ -376,7 +372,136 @@ struct Node* Delete(struct Node* root, ll x){
     return root;
 
 }
+*/
 
+struct Node* Delete(struct Node* root, ll x){
+
+    if(root != NULL){
+
+        if(x == root->keys ) {
+                
+            if (root->rightChild == NULL){
+
+                if(root->leftChild != NULL )root->leftChild->Parent = root->Parent;
+
+                if(root->Parent != NULL ){
+                    if (root->Parent->rightChild == root){
+                        root->Parent->rightChild = root->leftChild;
+                    }
+                    else{
+                        root->Parent->leftChild = root->leftChild;
+                    }
+                }
+                free(root);
+                return root->leftChild;
+            }
+
+            else if (root-> leftChild == NULL){
+
+                if(root->rightChild != NULL )root->rightChild->Parent = root->Parent;
+
+                if(root->Parent != NULL ){
+                    if (root->Parent->rightChild == root){
+                        root->Parent->rightChild = root->rightChild;
+                    }
+                    else{
+                        root->Parent->leftChild = root->rightChild;
+                    }
+                }
+
+                free(root);
+                return root->rightChild;
+
+            }
+
+            else {
+
+                struct Node* temp = root->rightChild;
+
+                struct Node* temp2;
+
+                while (temp->leftChild!=NULL){
+
+                    temp=temp->leftChild;
+
+                }
+
+                ll tempk = temp->keys;
+                ll tempk2 = root->keys;
+                
+                root = Delete (root, temp->keys);
+
+                if(root->keys == tempk2)
+                    root->keys = tempk;
+                else if (root->leftChild != NULL && root->leftChild->keys == tempk2)
+                    root->leftChild->keys = tempk;
+                else
+                    root->rightChild->keys = tempk;
+
+                return root;
+
+            }
+
+        }
+
+        if(x > root->keys ) {
+            if(root->rightChild != NULL){
+                Delete(root->rightChild, x);
+            }
+            else return root;
+
+            //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
+
+            if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
+                if(getHeight(root->leftChild->leftChild) > getHeight(root->leftChild->rightChild) ){
+                    //cout<<(root->keys)<<endl;
+                    root = rotateRight(root);
+                    
+                }
+                else{
+              //      cout<<(root->keys)<<endl;
+                    rotateLeft(root->leftChild);
+                    root = rotateRight(root);
+                }
+            }
+            //cout<<(root->keys)<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
+
+            root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
+
+            //cout<<root->keys<<" RIGHT "<<root->rightChild->keys<<" LEFT "<<root->leftChild->keys<<endl;
+            return root;
+
+        }
+
+        if(root->leftChild != NULL){
+                Delete(root->leftChild, x);
+            }
+        else return root;
+
+        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
+
+        if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
+            if(getHeight(root->rightChild->leftChild) > getHeight(root->rightChild->rightChild) ){
+                rotateRight(root->rightChild);
+                root = rotateLeft(root);
+            }
+            else{
+                root = rotateLeft(root);
+            }
+        }
+
+        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
+
+        root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
+
+        return root;
+
+    }
+
+    root = InsertNode(root, x, true);
+    return root;
+
+}
 
 
 int main()
@@ -387,19 +512,28 @@ int main()
 
     struct Node* root = NULL;
 
-    root = Insert(root, 10);
-    Insert(root, 5);
-    Insert(root, 15);
-    Insert(root, 52);
-    Insert(root, 55);
-    root = Insert(root, 57);
-    //Insert(root, 6);
-    //root = Delete(root, 10);
+    while(1){
 
-    //struct Node* temp = root->Parent->rightChild;
-    //cout<<temp->keys<<endl;
-    InorderTraversal (root);
+        int com;
+        ll x;
+        cin>>com;
+        
+        if(com == 0 ) InorderTraversal(root);
+        else if(com == 1) {
+            cin>>x;
+            root = Insert(root, x);
+        }
+        else if(com == 2){
+            cin>>x;
+            root = Delete(root, x);
+        }
+        else{
+            break;
+        }
+
+    }
 
     return 0;
 }
+
 
