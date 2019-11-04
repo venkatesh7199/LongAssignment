@@ -491,4 +491,22 @@ int main()
     return 0;
 }
 
+/*
+	INPUT format
+	first input is command type;
+	
+	0 - inorder traversal
+	prints keyss, heights, and parents of nodes in order.
+	
+	1- insertion
+	prompts another input and inserts it in the tree;
+	does nothing if key already exists;
+	
+	2 - deletion
+	prompts another input and inserts it in the tree;
+	does nothing if key doesnt exist;
+	
+	any other command breaks input loop
+	
+*/	
 
