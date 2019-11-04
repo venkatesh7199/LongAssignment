@@ -294,7 +294,7 @@ int main()
 	first input is command type;
 	
 	0 - inorder traversal
-	prints keyss, heights, and parents of nodes in order.
+	prints keys of nodes in order.
 	
 	1- insertion
 	prompts another input and inserts it in the tree;
