@@ -304,5 +304,6 @@ int main()
 	prompts another input and inserts it in the tree;
 	does nothing if key doesnt exist;
 	
+	any other command breaks input loop
 	
 */	
