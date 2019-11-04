@@ -188,6 +188,8 @@ struct Node* DeleteNode (struct Node* root ){
 
 void InorderTraversal (struct Node* root){
 
+    if(root == NULL)return;
+
     if( root->leftChild != NULL ) InorderTraversal (root->leftChild);
 
     cout<< (root->keys) <<endl;
@@ -264,12 +266,26 @@ int main()
 
     struct Node* root = NULL;
 
-    root = Insert(root, 10);
-    Insert(root, 5);
-    Insert(root, 15);
-    root = Delete(root, 15);
+    while(1){
 
-    InorderTraversal (root);
+        int com;
+        ll x;
+        cin>>com;
+        
+        if(com == 0 ) InorderTraversal(root);
+        else if(com == 1) {
+            cin>>x;
+            root = Insert(root, x);
+        }
+        else if(com == 2){
+            cin>>x;
+            root = Delete(root, x);
+        }
+        else{
+            break;
+        }
+
+    }
 
     return 0;
 }
