@@ -280,7 +280,7 @@ struct Node* rotateLeft (struct Node * root){
 
 
     root->Parent = root->rightChild;
-    //cout<<root->Parent->keys<<endl;
+
     root->rightChild = root->Parent->leftChild;
 
     root->Parent->leftChild = root;
@@ -304,34 +304,27 @@ struct Node* Insert(struct Node* root, ll x){
             }
             else InsertNode(root, x, true);
 
-            //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
+            
 
             if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
                 if(getHeight(root->rightChild->leftChild) > getHeight(root->rightChild->rightChild) ){
-                    //cout<<(root->keys)<<endl;
                     rotateRight(root->rightChild);
                     root = rotateLeft(root);
                 }
                 else{
-              //      cout<<(root->keys)<<endl;
+
                     root = rotateLeft(root);
                 }
             }
-            //cout<<(root->keys)<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
-
+            
             root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
-
-            //cout<<root->keys<<" RIGHT "<<root->rightChild->keys<<" LEFT "<<root->leftChild->keys<<endl;
             return root;
-
         }
 
         if(root->leftChild != NULL){
                 Insert(root->leftChild, x);
             }
         else InsertNode(root, x, false);
-
-        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
 
         if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
             if(getHeight(root->leftChild->leftChild) > getHeight(root->leftChild->rightChild) ){
@@ -343,8 +336,6 @@ struct Node* Insert(struct Node* root, ll x){
             }
         }
 
-        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
-
         root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
 
         return root;
@@ -353,26 +344,6 @@ struct Node* Insert(struct Node* root, ll x){
     root = InsertNode(root, x, true);
     return root;
 }
-
-/*
-struct Node* Delete(struct Node* root, ll x){
-
-    struct Node* temp = Search(root, x);
-
-    if(temp == root){
-        if(temp->keys == x) {
-            temp = DeleteNode(temp);
-            return temp;
-        }
-        return temp;
-    }
-
-    if(temp->keys == x) DeleteNode(temp);
-
-    return root;
-
-}
-*/
 
 struct Node* Delete(struct Node* root, ll x){
 
@@ -450,35 +421,23 @@ struct Node* Delete(struct Node* root, ll x){
             }
             else return root;
 
-            //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
-
             if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
                 if(getHeight(root->leftChild->leftChild) > getHeight(root->leftChild->rightChild) ){
-                    //cout<<(root->keys)<<endl;
                     root = rotateRight(root);
-                    
                 }
                 else{
-              //      cout<<(root->keys)<<endl;
                     rotateLeft(root->leftChild);
                     root = rotateRight(root);
                 }
             }
-            //cout<<(root->keys)<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
-
             root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
-
-            //cout<<root->keys<<" RIGHT "<<root->rightChild->keys<<" LEFT "<<root->leftChild->keys<<endl;
             return root;
-
         }
 
         if(root->leftChild != NULL){
                 Delete(root->leftChild, x);
             }
         else return root;
-
-        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
 
         if(abs(getHeight(root->leftChild)-getHeight(root->rightChild)) > 1){
             if(getHeight(root->rightChild->leftChild) > getHeight(root->rightChild->rightChild) ){
@@ -490,12 +449,8 @@ struct Node* Delete(struct Node* root, ll x){
             }
         }
 
-        //cout<<root->keys<<" "<<(abs(getHeight(root->leftChild) - getHeight(root->rightChild)))<<" "<<getHeight(root->leftChild)<<" "<<getHeight(root->rightChild)<<endl;
-
-        root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
-
+	root->height = max(getHeight(root->leftChild),getHeight(root->rightChild)) + 1;
         return root;
-
     }
 
     root = InsertNode(root, x, true);
